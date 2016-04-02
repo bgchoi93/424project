@@ -1,4 +1,5 @@
 package student_player.mytools;
+import hus.HusBoardState;
 
 public class MyTools {
 
