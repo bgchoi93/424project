@@ -6,6 +6,7 @@ import hus.HusMove;
 
 import java.util.ArrayList;
 
+import student_player.mytools.MCTree;
 import student_player.mytools.MyTools;
 
 /** A Hus player submitted by a student. */
@@ -23,13 +24,15 @@ public class StudentPlayer extends HusPlayer {
      * for another example agent. */
     public HusMove chooseMove(HusBoardState board_state)
     {
+    	long initTime = System.currentTimeMillis();
         // Get the contents of the pits so we can use it to make decisions.
         int[][] pits = board_state.getPits();
         
         // Use ``player_id`` and ``opponent_id`` to get my pits and opponent pits.
         int[] my_pits = pits[player_id];
         int[] op_pits = pits[opponent_id];
-
+        
+        
         // Use code stored in ``mytools`` package.
         MyTools.getSomething();
 
@@ -39,14 +42,14 @@ public class StudentPlayer extends HusPlayer {
         
         //get turn number: if first move, build mcst. 
         int turnNumber = board_state.getTurnNumber();
-        System.out.println("Turn Number: " + turnNumber);
-        if(turnNumber == 0){
-        	
+        /*
+         * if(turnNumber == 0){
+        	BuildSearchTree.
         }
         else{
         	
         }
-        
+        */
         HusMove move = moves.get(0);
 
         // We can see the effects of a move like this...

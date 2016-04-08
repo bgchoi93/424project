@@ -5,27 +5,38 @@ import hus.HusBoardState;
 import hus.HusMove;
 
 public class Node {
-	private HusMove move;
+	private HusBoardState CurrentState;
+	private HusMove BestMove;
+	private HusMove Move;
 	private int numberW;
 	private int numberP;
 	private Node Parent;
 	private ArrayList<Node> Children;
+	private double Score;
 	
-	public Node(){
-		this.move = move;
+	public Node(HusBoardState state){
+		this.CurrentState = state;
+		this.Move = Move;
+		this.BestMove = BestMove;
 		this.numberW = numberW;
 		this.numberP = numberP;
 		this.Parent = Parent;
 		this.Children = Children;
 	}
 	//Getters
-	public HusMove getNodeMove(){
-		return this.move;
+	public HusBoardState getState(){
+		return this.CurrentState;
+	}
+	public HusMove getMove(){
+		return this.Move;
 	}
 	public double getStat(){
 		double w = (double)this.numberW;
 		double p = (double)this.numberP;
 		return w/p;
+	}
+	public double getScore(){
+		return this.Score;
 	}
 	public Node getParent(){
 		return this.Parent;
@@ -44,15 +55,44 @@ public class Node {
 		return siblings;
 	}
 	//Setters
-	public void setNode(HusMove m, int w, int p){
-		this.move = m;
+	public void setStat(int w, int p){
 		this.numberW = w;
 		this.numberP = p;
+	}
+	public void setBestMove(Node p){
+		HusMove bestMove = null;
+		double highestProb = 0.0;
+		for(Node c: Children){
+			if(c.getStat() > highestProb){
+				highestProb = c.getStat();
+				bestMove = c.getMove();
+			}
+		}
+		this.BestMove = bestMove;
 	}
 	public void setParent(Node p){
 		this.Parent = p;
 	}
-	public void addChildren(Node p){
-		this.Children.add(p);
+	public void addChildren(){
+		for (HusMove move: this.CurrentState.getLegalMoves()){
+			HusBoardState tmp = (HusBoardState) this.CurrentState.clone();
+			tmp.move(move);
+			Node child = new Node(tmp);
+			this.Children.add(child);
+		}
+	}
+	public void setScore(double score){
+		this.Score = score;
+	}
+	
+	public HusMove getBestMove(Node p){
+		Node bestChild = null;
+		for(Node i: p.Children){
+			if (bestChild == null || bestChild.getStat() < i.getStat()){
+				bestChild = i;
+			}
+		}
+		HusMove bestMove = bestChild.BestMove;
+		return bestMove;
 	}
 }
