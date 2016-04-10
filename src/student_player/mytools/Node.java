@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import hus.HusBoardState;
 import hus.HusMove;
 
-public class Node {
+public class Node{
+
 	private HusBoardState CurrentState;
 	private HusMove BestMove;
 	private HusMove Move;
@@ -16,24 +17,19 @@ public class Node {
 	
 	public Node(HusBoardState state){
 		this.CurrentState = state;
-		this.Move = Move;
-		this.BestMove = BestMove;
-		this.numberW = numberW;
-		this.numberP = numberP;
 		this.Parent = Parent;
 		this.Children = Children;
+		this.Move = Move;
+		this.numberW = numberW;
+		this.numberP = numberP;
 	}
+	
 	//Getters
 	public HusBoardState getState(){
 		return this.CurrentState;
 	}
 	public HusMove getMove(){
 		return this.Move;
-	}
-	public double getStat(){
-		double w = (double)this.numberW;
-		double p = (double)this.numberP;
-		return w/p;
 	}
 	public double getScore(){
 		return this.Score;
@@ -44,6 +40,17 @@ public class Node {
 	public ArrayList<Node> getChildren(){
 		return this.Children;
 	}
+
+	public double getStat(){
+		double w = (double)this.numberW;
+		double p = (double)this.numberP;
+		return w/p;
+	}
+	public void printStat(){
+		System.out.println("Played: " + this.numberP);
+		System.out.println("Won: " + this.numberW);
+	}
+	/*
 	public ArrayList<Node> getSibling(){
 		ArrayList<Node> siblings = new ArrayList<Node>();
 		Node parent = this.Parent;
@@ -54,12 +61,24 @@ public class Node {
 		}
 		return siblings;
 	}
+	*/
+	
 	//Setters
+	public void win(){
+		this.numberP += 1;
+		this.numberW += 1;
+	}
+	public void lose(){
+		this.numberP += 1;
+	}
+	
 	public void setStat(int w, int p){
 		this.numberW = w;
 		this.numberP = p;
 	}
+	/*
 	public void setBestMove(Node p){
+	
 		HusMove bestMove = null;
 		double highestProb = 0.0;
 		for(Node c: Children){
@@ -70,21 +89,29 @@ public class Node {
 		}
 		this.BestMove = bestMove;
 	}
+	 */
 	public void setParent(Node p){
 		this.Parent = p;
 	}
 	public void addChildren(){
+		this.Children = new ArrayList<Node>();
 		for (HusMove move: this.CurrentState.getLegalMoves()){
 			HusBoardState tmp = (HusBoardState) this.CurrentState.clone();
 			tmp.move(move);
 			Node child = new Node(tmp);
+			child.Move = move;
+			child.Parent = this;
+			child.setStat(0, 0);
 			this.Children.add(child);
+			
 		}
 	}
+	
 	public void setScore(double score){
 		this.Score = score;
 	}
 	
+	/*
 	public HusMove getBestMove(Node p){
 		Node bestChild = null;
 		for(Node i: p.Children){
@@ -95,4 +122,7 @@ public class Node {
 		HusMove bestMove = bestChild.BestMove;
 		return bestMove;
 	}
+	*/
+	
+	
 }
