@@ -15,9 +15,6 @@ public class Node{
 	private Node Parent;
 	private ArrayList<Node> Children;
 	private double Score;
-	private double Stat;
-	private int numSim; // number of simulation
-	//private Node next;
 	
 	public Node(HusBoardState state){
 		this.CurrentState = state;
@@ -27,21 +24,14 @@ public class Node{
 		this.numberW = 0;
 		this.numberP = 0;
 		this.Score = 0.0;
-		this.Stat = 0.0;
-		this.numSim = 0;
 	}
-	public Node getNode(){
-		return this;
-	}
+	
 	//Getters
 	public HusBoardState getState(){
 		return this.CurrentState;
 	}
 	public HusMove getMove(){
 		return this.Move;
-	}
-	public double getScore(){
-		return this.Score;
 	}
 	
 	public Node getParent(){
@@ -50,20 +40,21 @@ public class Node{
 	public ArrayList<Node> getChildren(){
 		return this.Children;
 	}
-	public int getNumSim(){
-		return this.numberP;
-	}
-	public int getNumWins(){
-		return this.numberW;
-	}
 	public double getStat(){
 		double w = (double)this.numberW;
 		double p = (double)this.numberP;
 		return w/p;
 	}
 	
-	//Setters
+	// to be deleted: getNumSim(), getNumWins()
+	public int getNumSim(){
+		return this.numberP;
+	}
+	public int getNumWins(){
+		return this.numberW;
+	}
 	
+	//Setters
 	public void win(){
 		this.numberP += 1;
 		this.numberW += 1;
@@ -77,9 +68,6 @@ public class Node{
 		this.numberP = p;
 	}
 	
-	public void setParent(Node p){
-		this.Parent = p;
-	}
 	public void addChildren(){
 		this.Children = new ArrayList<Node>();
 		for (HusMove move: this.CurrentState.getLegalMoves()){
@@ -92,117 +80,6 @@ public class Node{
 			this.Children.add(child);
 			
 		}
-	}
-
-	
-	// Evaluation of state
-	public void evaluateState(int player_id, int opponent_id){
-		// won: score = 100
-		if (this.CurrentState.getWinner() == player_id){
-			this.Score = 100.0;
-		}
-		// lost: score = 0
-		else if (this.CurrentState.getWinner() == opponent_id){
-			this.Score = 0.0;
-		}
-		// current state: opponent's turn => get the number of safe seeds, and then compute the score
-		else if(this.CurrentState.getTurnPlayer() == opponent_id){
-			HusBoardState current = (HusBoardState) this.CurrentState.clone();
-			int[][] pits = current.getPits();
-			int[] myPits = pits[player_id];
-			
-			int total = 0;
-			for(int i = 0; i < myPits.length; i++){
-				total += myPits[i];
-			}
-			int maxCaptured = 0;
-			// for each opponent's move, get the number of safe seeds (not able to be captured)
-			for(HusMove move: current.getLegalMoves()){
-				HusBoardState tmp = (HusBoardState) current.clone();
-				tmp.move(move);
-				int afterOpMove = 0;
-				for(int i = 0; i < myPits.length; i++){
-					afterOpMove += myPits[i];
-				}
-				if(maxCaptured > (total - afterOpMove)){
-					maxCaptured = (total - afterOpMove);
-				}
-			}
-			// score = percentage of min{safe seeds}/max{seeds}
-			double score = (double)(total - maxCaptured);
-			score = (score/96.0)*100.0;
-			this.Score = score;
-		}
-		// current state: my turn => for each of my move, get the number of safe seeds, and then compute the maximum score
-		else{
-			HusBoardState current = (HusBoardState) this.CurrentState.clone();
-			double bestScore = 0.0;
-			for(HusMove myMove: current.getLegalMoves()){
-				HusBoardState tmp = (HusBoardState) current.clone();
-				tmp.move(myMove);
-				int[][] pits = current.getPits();
-				int[] myPits = pits[player_id];
-				
-				int total = 0;
-				for(int i = 0; i < myPits.length; i++){
-					total += myPits[i];
-				}
-				int maxCaptured = 0;
-				// for each opponent's move, get the number of safe seeds (not able to be captured)
-				for(HusMove opMove: current.getLegalMoves()){
-					HusBoardState afterMyMove = (HusBoardState) current.clone();
-					afterMyMove.move(opMove);
-					int afterOpMove = 0;
-					for(int i = 0; i < myPits.length; i++){
-						afterOpMove += myPits[i];
-					}
-					if(maxCaptured > (total - afterOpMove)){
-						maxCaptured = (total - afterOpMove);
-					}
-				}
-				double score = (double)(total - maxCaptured);
-				score = (score/96.0)*100.0;
-				if (score > bestScore){
-					bestScore = score;
-				}
-			}
-			this.Score = bestScore;
-		}
-	}
-	
-	// simple policy: return the move which maximizes (# player's seeds - # opponent's seeds)
-	public HusMove simplePolicy(int pid, int oid){
-		HusMove bestMove = null;
-		int bestDiff = -97;
-		// player's turn: maximize the difference
-		if (this.getState().getTurnPlayer() == pid){
-			for (int i = 0; i < this.CurrentState.getLegalMoves().size(); i++){
-				HusBoardState tmp = (HusBoardState) this.CurrentState.clone();
-				tmp.move(tmp.getLegalMoves().get(i));
-				int [][] tmpPits = tmp.getPits();
-				int[] myPits = tmpPits[pid];
-				int[] opPits = tmpPits[oid];
-				
-				int mySeeds = 0;
-				int opSeeds = 0;
-				for(int j = 0; j < myPits.length; j++){
-					mySeeds += myPits[j];
-				}
-				for(int j = 0; j < opPits.length; j++){
-					opSeeds += opPits[j];
-				}
-				int difference = (mySeeds - opSeeds);
-				if (bestDiff < difference){
-					bestDiff = difference;
-					bestMove = tmp.getLegalMoves().get(i);
-				}
-			}
-		}
-		else{
-			
-		}
-		
-		return bestMove;
 	}
 	
 	// attack score: how many opponent's seeds does the move capture
@@ -219,14 +96,12 @@ public class Node{
 		int score = afterMove - beforeMove;
 		return score;
 	}
-	// set att + def combined score for the given node;
+	// set att + def combined score for the given node according to the current state;
 	public void setCombinedScore(int player){
 		int opponent = 0;
 		if (player == 0){
 			opponent = 1;
 		}
-		//System.out.println("Attack: " + this.getAttScore(player));
-		//System.out.println("Defense: " + this.getDefScore(player));
 		double aScore = (double) this.getAttScore(player);
 		double dScore = (double) this.getDefScore(player);
 
@@ -259,7 +134,6 @@ public class Node{
 				bestMove = child.Move;
 			}
 		}
-		//System.out.println("Best Score: " + bestScore);
 		Random randGenerator = new Random();
 		double randNumber = randGenerator.nextDouble();
 		if(randNumber < 0.7){
@@ -268,7 +142,6 @@ public class Node{
 		else{
 			return (HusMove) this.CurrentState.getRandomMove();
 		}
-		
 	}
 	
 	// get total number of seeds in the player's pit
@@ -291,15 +164,5 @@ public class Node{
 		}
 		return numSeeds;
 	}
-	
-	
-	// update score and number of simulations on this node	
-	public void calculateScore(double newScore){
-		double n = (double)(this.numSim + 1);
-		this.Score = (this.Score*(double)this.numSim) + newScore;
-		this.Score = (this.Score)/n;
-		this.numSim += 1;
-	}
-	
 	
 }
