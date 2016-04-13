@@ -14,4 +14,51 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/student_player/Brute_Force.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Brute_Force.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Hash_Key.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Hash_Key.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Hash_System.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Hash_System.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Hash_Value.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Hash_Value.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Node.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Node.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Random_brute_force.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Random_brute_force.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Sandbox.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Sandbox.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/Stack_Unit.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/Stack_Unit.java</locationURI>
+		</link>
+		<link>
+			<name>src/student_player/StudentPlayer_a.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/StudentPlayer_a.java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
