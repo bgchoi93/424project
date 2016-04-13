@@ -1,0 +1,11 @@
+# Server version 0.08 running on 10.3.89.85:8123
+# Game ID: 48
+# Board class: hus.HusBoard
+# Timeout: 300000
+# First Move Timeout: 30000
+# Date: Sun Apr 10 01:00:30 EDT 2016
+# Player 1: Player-0, 'RandomHusPlayer', running on localhost
+# Player 2: Player-1, '260526672', running on localhost
+START Player-0 RandomHusPlayer
+START Player-1 260526672
+PIT 0 17

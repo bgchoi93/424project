@@ -1,0 +1,37 @@
+# Server version 0.08 running on 10.3.89.85:8123
+# Game ID: 57
+# Board class: hus.HusBoard
+# Timeout: 300000
+# First Move Timeout: 30000
+# Date: Sun Apr 10 01:27:29 EDT 2016
+# Player 1: Player-0, 'RandomHusPlayer', running on localhost
+# Player 2: Player-1, '260526672', running on localhost
+START Player-0 RandomHusPlayer
+START Player-1 260526672
+PIT 0 8
+PIT 1 10
+PIT 0 5
+PIT 1 11
+PIT 0 11
+PIT 1 8
+PIT 0 20
+PIT 1 9
+PIT 0 25
+PIT 1 5
+PIT 0 12
+PIT 1 2
+PIT 0 23
+PIT 1 1
+PIT 0 30
+PIT 1 17
+PIT 0 9
+PIT 1 8
+PIT 0 27
+PIT 1 14
+PIT 0 29
+PIT 1 0
+PIT 0 7
+PIT 1 24
+PIT 0 12
+GAMEOVER WINNER 0
+# Game ended: Sun Apr 10 01:28:09 EDT 2016

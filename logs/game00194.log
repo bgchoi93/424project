@@ -1,0 +1,40 @@
+# Server version 0.08 running on 192.168.2.26:8123
+# Game ID: 194
+# Board class: hus.HusBoard
+# Timeout: 300000
+# First Move Timeout: 30000
+# Date: Tue Apr 12 15:17:17 EDT 2016
+# Player 1: Player-0, '260526672', running on localhost
+# Player 2: Player-1, '260526672', running on localhost
+START Player-0 260526672
+START Player-1 260526672
+PIT 0 6
+PIT 1 14
+PIT 0 0
+PIT 1 6
+PIT 0 1
+PIT 1 10
+PIT 0 19
+PIT 1 23
+PIT 0 21
+PIT 1 15
+PIT 0 22
+PIT 1 27
+PIT 0 12
+PIT 1 5
+PIT 0 25
+PIT 1 17
+PIT 0 16
+PIT 1 14
+PIT 0 17
+PIT 1 18
+PIT 0 15
+PIT 1 4
+PIT 0 30
+PIT 1 16
+PIT 0 6
+PIT 1 0
+PIT 0 9
+PIT 1 0
+GAMEOVER WINNER 1
+# Game ended: Tue Apr 12 15:17:59 EDT 2016
