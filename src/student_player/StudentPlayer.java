@@ -4,10 +4,7 @@ import hus.HusBoardState;
 import hus.HusPlayer;
 import hus.HusMove;
 
-import java.util.ArrayList;
-
 import student_player.mytools.MCTree;
-import student_player.mytools.MyTools;
 
 /** A Hus player submitted by a student. */
 public class StudentPlayer extends HusPlayer {
@@ -36,9 +33,9 @@ public class StudentPlayer extends HusPlayer {
         HusBoardState copy_state = (HusBoardState) board_state.clone();
     	MCTree mctree = new MCTree();
         mctree.buildTree(copy_state);
-        
-        HusMove move = mctree.getBestMove(copy_state, initTime);
-
+        mctree.getRoot().addChildren();
+        //HusMove move = mctree.getBestMove(copy_state, initTime);
+        HusMove move = mctree.simulateRandom(initTime, player_id, opponent_id);
         /*
         // We can see the effects of a move like this...
         HusBoardState cloned_board_state = (HusBoardState) board_state.clone();
